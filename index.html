@@ -3,677 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOSS STYLE | Luxury Fashion E-Commerce</title>
-    <!--Google Fonts & Font Awesome-->
-    <link href=" https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,700;14..32,400;14..32,700;14..32,800&display=swap" rel="stylesheet">
-
-    <!--Swiper for cinematic carousels-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        /*luxury black/white/gold theme */
-        :root {
-            --gold: #D4AF37;
-            --gold-glow: rgba(212, 175, 55, 0.4);
-            --black-deep: #050505;
-            --charcoal: #111111;
-            -white-smoke: #f5f5f5;
-        }
-
-        /*custom scrollbar*/
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 10px;
-        }
-
-        /*cinematic global transitions*/
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s ease-out;
-        }
-        .fade-up.reveal {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /*background music toggle*/
-        .music-toggle {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 1000;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--gold);
-            border-radius: 60px;
-            padding: 12px 18px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: var(--gold);
-            transition: all 0.3s;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 0 12px, rgba(212, 175, 55, 0.3);
-        }
-        .music-toggle:hover {
-            background: var(--gold);
-            color: black;
-            transform: scale(1.03);
-        }
-
-        /*smooth container*/
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 5%;
-        }
-
-        /*header navigation*/
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 5%;
-            backdrop-filter: blur(12px);
-            background: rgba(5,5,5,0.65);
-            position: sticky;
-            top: 0;
-            z-index: 99;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-        }
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #fff, var(--gold));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .nav-links a {
-            color: #ddd;
-            margin-left: 28px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-        .nav-links a:hover, .nav-icons i:hover {
-            color: var(--gold);
-        }
-        .nav-icons i {
-            margin-left: 20px;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        /*Hero cinematic video area*/
-        .hero-video {
-            height: 90vh;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #bgVideo {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            filter: brightness(0.45);
-        }
-        .hero-content {
-            text-align: center;
-            max-width: 800px;
-            z-index: 2;
-            animation: floatGlow 3s infinite alternate;
-        }
-        .hero-content h1 {
-            font-size: 4.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, var(--gold));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .hero-content p {
-            font-size: 1.2rem;
-            margin: 20px 0;
-        }
-        .btn-gold {
-            background: transparent;
-            border: 2px solid var(--gold);
-            padding: 12px 32px;
-            color: var(--gold);
-            font-weight: bold;
-            border-radius: 40px;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .btn-gold:hover {
-            background: var(--gold);
-            color: #000;
-            box-shadow: 0 0 15px var(--gold);
-        }
-
-        /*product card modern*/
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-        .product-card {
-            background: #111;
-            border-radius: 28px;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            backdrop-filter: blur(4px);
-        }
-        .product-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            border-color: var(--gold);
-            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.8), 0 0 0 2px rgba(212, 175, 55, 0.3);
-        }
-        .product.img {
-            height: 260px;
-            background: #1e1e1e;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .product-img img {
-            width: 85%;
-            transition: transform 0.5s;
-            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5));
-        }
-        .product-card:hover ,product.img img {
-            transform: scale(1.08);
-        }
-        .product-info {
-            padding: 18px;
-        }
-        .product-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        .product-price {
-            color: var(--gold);
-            margin: 8px 0;
-            font-weight: 600;
-        }
-        .add-cart {
-            background: none;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 6px 16px;
-            border-radius: 30px;
-            width: 100%;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .add-cart:hover {
-            background: var(--gold);
-            color: black;
-        }
-
-        /*swiper for featured collections/cinematic carousel*/
-        .swiper {
-            width: 100%;
-            padding: 20px 0;
-        }
-        .swiper-slide {
-            text-align: center;
-        }
-
-        section {
-            margin: 80px 0;
-        }
-        .section-title {
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            position: relative;
-            display: inline-block;
-        }
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--gold);
-        }
-
-        /*review*/
-        .review-card {
-            background: #131313;
-            border-radius: 30px;
-            padding: 25px;
-            margin: 15px;
-            border-left: 4px solid var(--gold);
-        }
-
-        /*cart & checkout interface(modal)*/
-        .cart-modal, .auth-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.3s;
-        }
-        .cart-modal.active, .auth-modal.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .cart-content, .auth-content {
-            background: #0f0f0f;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 40px;
-            padding: 30px;
-            border: 1px solid var(--gold);
-        }
-        .close-modal {
-            float: right;
-            font-size: 28px;
-            cursor: pointer;
-        }
-
-        /*payment methods/promo banners*/
-        .payments {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 30px 0;
-        }
-        .pay-icon {
-            font-size: 2.5rem;
-            background: #1a1a1a;
-            padding: 15px;
-            border-radius: 50%;
-        }
-        .promo-banner {
-            background: linear-gradient(145deg, #0a0a0a, #1c1c1c);
-            border-radius: 40px;
-            padding: 50px;
-            text-align: center;
-            border: 1px solid var(--gold);
-        }
-
-        @keyframes floatGlow {
-            0% {text-shadow: 0 0 5px var(--gold-glow);}
-            100% {text-shadow: 0 0 25px var(--gold);}
-        }
-
-        @media (max-width:800px) {
-            .hero-content h1 {font-size: 2.6rem;}
-            .nav-links {display: none;}
-            .nav-icons {margin-left: 12px;}
-        }
-        footer {
-            text-align: center;
-            padding: 40px;
-            border-top: 1px solid #222;
-        }
-    </style>
+    <title>Boss Shewu Sales</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-   <div class="music-toggle"  id="musicToggle">
-    <i class="fas fa-music"></i><span
-    id="musicStatus">LUXURY SOUNDSCAPE</span>
-   </div>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo">Boss Shewu Sales</h1>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-   <nav class="navbar">
-    <div class="logo">BOSS SHEWU</div>
-    <div class="nav-links">
-        <a href="#">New</a><a href="#">Men</a><a href="#">Women</a>
-        <a href="#">Collections</a>
-    </div>
-    <div class="nav-icons">
-        <i class="far fa-heart"></i>
-        <i class="fas fa-shopping-bag" id="cartIcon"></i>
-        <i class="far far-user" id="userIcon"></i>
-    </div>
-   </nav>
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h2>Welcome to Boss Shewu Sales</h2>
+                <p>Your trusted partner for quality products and exceptional service</p>
+                <button class="cta-button">Shop Now</button>
+            </div>
+        </section>
 
-   <!--Hero cinematic video-->
-   <div class="hero-video">
-    <video autoplay muted loop playsinline id="bgVideo">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-model-walking-on-a-fashion-runway-32867-large.mp4" type="video/mp4">
-    </video>
-    <div class="hero-content fade-up">
-        <h1>WALK THE EDGE</h1>
-        <p>Autumn / Winter 2026 - Cinematic street couture</p>
-        <button class="btn-gold"
-        onclick="scrollToFeatured()">EXPLORE COLLECTIONS 
-    <i class="fas fa-arrow-right"></i></button>
-    </div>
-   </div>
+        <section id="products" class="products">
+            <div class="container">
+                <h2>Our Products</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <h3>Product 1</h3>
+                        <p>High quality product description</p>
+                        <span class="price">$99.99</span>
+                    </div>
+                    <div class="product-card">
+                        <h3>Product 2</h3>
+                        <p>Premium quality product description</p>
+                        <span class="price">$149.99</span>
+                    </div>
+                    <div class="product-card">
+                        <h3>Product 3</h3>
+                        <p>Exclusive product description</p>
+                        <span class="price">$199.99</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-   <main class="container">
-    <!--Featured Footwear Swiper-->
-    <section>
-        <h2 class="section-title fade-up">ICONIC FOOTWEAR</h2>
-        <div class="swiper featured-swiper fade-up">
-            <div class="swiper-wrapper" id="featuredShoes"></div>
-            <div class="swiper-pagination"></div>
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About Us</h2>
+                <p>We are dedicated to providing the best products and customer service in the industry.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Boss Shewu Sales. All rights reserved.</p>
         </div>
-    </section>
+    </footer>
 
-    <!--Trending streetwear outfits grid (dynamic)-->
-    <section>
-        <h2 class="section-title fade-up">TRENDING STREETWEAR</h2>
-        <div class="product-grid" id="trendingGrid"></div>
-    </section>
-
-    <!--New arrivals & Best sellers 
-    combined cuz cinematic but distinct-->
-    <section>
-        <h2 class="section-title fade-up">NEW ARRIVALS</h2>
-        <div class="product-grid" id="newArrivals"></div>
-    </section>
-<h2 class="section-title fade-up">✨ NEW ARRIVALS</h2>
-    <div class="product-grid" id="newArrivalsGrid"></div>
-  </section>
-
-  <section>
-    <h2 class="section-title fade-up">🏆 BEST SELLERS</h2>
-    <div class="product-grid" id="bestSellersGrid"></div>
-  </section>
-
-  <!-- Customer reviews -->
-  <section>
-    <h2 class="section-title fade-up">🗣️ VOICES OF LUXURY</h2>
-    <div class="swiper reviews-swiper fade-up">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide"><div class="review-card"><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><p>"The most immersive shopping interface — feels like a show."</p><h4>- Elena V.</h4></div></div>
-        <div class="swiper-slide"><div class="review-card"><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><p>"Sneakers arrived faster than light. Quality supreme."</p><h4>- Marcus T.</h4></div></div>
-        <div class="swiper-slide"><div class="review-card"><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star" style="color:var(--gold)"></i><i class="fas fa-star-half-alt" style="color:var(--gold)"></i><p>"Cinematic UI is jaw-dropping. Love the gold accents."</p><h4>- Sofia K.</h4></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Fashion promo banner -->
-  <div class="promo-banner fade-up">
-    <h2>LIMITED EDITION: GOLD PACK</h2>
-    <p>Free express shipping & exclusive tote bag on orders over $350</p>
-    <button class="btn-gold" style="margin-top:15px">SHOP NOW</button>
-  </div>
-
-  <!-- Payment Methods -->
-  <div class="payments fade-up">
-    <div class="pay-icon"><i class="fab fa-cc-visa"></i></div>
-    <div class="pay-icon"><i class="fab fa-cc-mastercard"></i></div>
-    <div class="pay-icon"><i class="fab fa-cc-amex"></i></div>
-    <div class="pay-icon"><i class="fab fa-bitcoin"></i></div>
-    <div class="pay-icon"><i class="fas fa-university"></i></div>
-  </div>
-</main>
-
-<footer>
-  <p>© 2025 BOSS SHEWU — Futuristic luxury commerce. All visuals cinematic.</p>
-</footer>
-
-<!-- CART MODAL -->
-<div id="cartModal" class="cart-modal">
-  <div class="cart-content">
-    <span class="close-modal" id="closeCart">&times;</span>
-    <h2>Shopping Bag</h2>
-    <div id="cartItemsList"></div>
-    <div id="cartTotal" style="margin:15px 0; font-weight:bold;"></div>
-    <button id="checkoutBtn" class="btn-gold" style="width:100%">Proceed to Checkout</button>
-  </div>
-</div>
-
-<!-- LOGIN / SIGNUP MODAL -->
-<div id="authModal" class="auth-modal">
-  <div class="auth-content">
-    <span class="close-modal" id="closeAuth">&times;</span>
-    <h2 id="authTitle">Sign In</h2>
-    <input type="text" placeholder="Email" id="loginEmail" style="width:100%; padding:12px; margin:10px 0; background:#222; border:1px solid var(--gold); color:white; border-radius:30px;">
-    <input type="password" placeholder="Password" id="loginPass" style="width:100%; padding:12px; margin:10px 0; background:#222; border:1px solid var(--gold); color:white; border-radius:30px;">
-    <button id="authActionBtn" class="btn-gold" style="width:100%">Login</button>
-    <p id="toggleAuthMsg" style="text-align:center; margin-top:15px; cursor:pointer; color:var(--gold);">Don't have an account? Sign up</p>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-  // product database (luxury items)
-  const products = [
-    { id: 1, name: "AURA Sneakers", price: 349, category: "footwear", img: "https://images.pexels.com/photos/1598508/pexels-photo-1598508.jpeg?auto=compress&cs=tinysrgb&w=400", type: "featured", gender: "unisex" },
-    { id: 2, name: "ORION Boots", price: 599, category: "footwear", img: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=400", type: "featured" },
-    { id: 3, name: "Gold Hoodie", price: 249, category: "hoodie", img: "https://images.pexels.com/photos/1648779/pexels-photo-1648779.jpeg?auto=compress&cs=tinysrgb&w=400", type: "trending" },
-    { id: 4, name: "Cargo Pants", price: 555, category: "pants", img: "https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=400", type: "trending" },
-    { id: 5, name: "Denim Jacket", price: 329, category: "jacket", img: "https://images.pexels.com/photos/1485434/pexels-photo-1485434.jpeg?auto=compress&cs=tinysrgb&w=400", type: "new" },
-    { id: 6, name: "Street T-Shirt", price: 89, category: "tshirt", img: "https://images.pexels.com/photos/4279429/pexels-photo-4279429.jpeg?auto=compress&cs=tinysrgb&w=400", type: "new" },
-    { id: 7, name: "Velocity Sneakers", price: 399, category: "footwear", img: "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=400", type: "bestseller" },
-    { id: 8, name: "Leather Biker", price: 499, category: "jacket", img: "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=400", type: "bestseller" },
-    { id: 9, name: "Abstract Tee", price: 79, category: "tshirt", img: "https://images.pexels.com/photos/2529148/pexels-photo-2418967.jpeg?auto=compress&cs=tinysrgb&w=400", type: "trending" },
-    { id: 10, name: "Slim Denim", price: 219, category: "jeans", img: "https://images.pexels.com/photos/1598507/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=400", type: "new" }
-  ];
-
-  let cart = [];
-
-  function renderProductCards(containerId, productList) {
-    const container = document.getElementById(containerId);
-    if(!container) return;
-    container.innerHTML = productList.map(p => `
-      <div class="product-card">
-        <div class="product-img"><img src="${p.img}" alt="${p.name}"></div>
-        <div class="product-info">
-          <div class="product-title">${p.name}</div>
-          <div class="product-price">$${p.price}</div>
-          <button class="add-cart" data-id="${p.id}">ADD TO CART</button>
-        </div>
-      </div>
-    `).join('');
-    // attach events after render
-    document.querySelectorAll('.add-cart').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = parseInt(btn.dataset.id);
-        const product = products.find(p => p.id === id);
-        if(product) {
-          cart.push(product);
-          updateCartUI();
-          alert(`${product.name} added to cart ✨`);
-        }
-      });
-    });
-  }
-
-  function updateCartUI() {
-    const cartItemsDiv = document.getElementById('cartItemsList');
-    const totalSpan = document.getElementById('cartTotal');
-    if(!cartItemsDiv) return;
-    if(cart.length === 0) {
-      cartItemsDiv.innerHTML = '<p>Your bag is empty, but it’s waiting for your style.</p>';
-      totalSpan.innerText = 'Total: $0';
-      return;
-    }
-    let total = 0;
-    cartItemsDiv.innerHTML = cart.map((item, idx) => {
-      total += item.price;
-      return `<div style="display:flex; justify-content:space-between; margin:8px 0;">${item.name} <span>$${item.price}</span> <button class="remove-item" data-idx="${idx}" style="background:none; color:var(--gold); border:none;">✖</button></div>`;
-    }).join('');
-    totalSpan.innerText = `Total: $${total}`;
-    document.querySelectorAll('.remove-item').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const idx = parseInt(btn.dataset.idx);
-        cart.splice(idx,1);
-        updateCartUI();
-      });
-    });
-  }
-
-  // checkout simulation
-  function checkoutSimulation() {
-    if(cart.length===0) alert("Your cart is empty, add some luxury items.");
-    else alert("✨ Checkout interface ready — (demo) Order placed seamlessly. Total: $" + cart.reduce((s,i)=>s+i.price,0));
-  }
-
-  // Swipers cinematic
-  const featuredSwiper = new Swiper('.featured-swiper', {
-    slidesPerView: 1.2, spaceBetween: 20, loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination', clickable: true },
-    breakpoints: { 768: { slidesPerView: 2.5 }, 1024: { slidesPerView: 3.5 } }
-  });
-  new Swiper('.reviews-swiper', { slidesPerView: 1, spaceBetween: 30, loop: true, autoplay: { delay: 4000 }, breakpoints: { 768: { slidesPerView: 2 } } });
-
-  // Populate categories
-  const featuredShoes = products.filter(p => p.category === 'footwear' && (p.type === 'featured' || p.id===1||p.id===7));
-  const featuredContainer = document.getElementById('featuredShoes');
-  if(featuredContainer) {
-    featuredContainer.innerHTML = featuredShoes.map(p => `<div class="swiper-slide"><div class="product-card" style="margin:0 5px;"><div class="product-img"><img src="${p.img}"></div><div class="product-info"><div>${p.name}</div><div class="product-price">$${p.price}</div><button class="add-cart" data-id="${p.id}">quick add</button></div></div></div>`).join('');
-    document.querySelectorAll('.add-cart').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = parseInt(btn.dataset.id);
-        const prod = products.find(p => p.id === id);
-        if(prod) { cart.push(prod); updateCartUI(); alert(`Added ${prod.name}`); }
-      });
-    });
-  }
-  renderProductCards('trendingGrid', products.filter(p => p.type === 'trending'));
-  renderProductCards('newArrivalsGrid', products.filter(p => p.type === 'new'));
-  renderProductCards('bestSellersGrid', products.filter(p => p.type === 'bestseller'));
-
-  // modals logic
-  const cartModal = document.getElementById('cartModal');
-  const authModal = document.getElementById('authModal');
-  document.getElementById('cartIcon').onclick = () => { updateCartUI(); cartModal.classList.add('active'); };
-  document.getElementById('closeCart').onclick = () => cartModal.classList.remove('active');
-  document.getElementById('userIcon').onclick = () => authModal.classList.add('active');
-  document.getElementById('closeAuth').onclick = () => authModal.classList.remove('active');
-  document.getElementById('checkoutBtn').onclick = () => { checkoutSimulation(); cartModal.classList.remove('active'); };
-  
-  // auth toggle
-  let isLogin = true;
-  const authTitle = document.getElementById('authTitle');
-  const authBtn = document.getElementById('authActionBtn');
-  const toggleMsg = document.getElementById('toggleAuthMsg');
-  toggleMsg.onclick = () => {
-    isLogin = !isLogin;
-    authTitle.innerText = isLogin ? "Sign In" : "Create Account";
-    authBtn.innerText = isLogin ? "Login" : "Sign Up";
-    toggleMsg.innerText = isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in";
-  };
-  authBtn.onclick = () => {
-    const email = document.getElementById('loginEmail').value;
-    if(email.trim() === "") alert("Welcome to LUMINA — demo authentication");
-    else alert(isLogin ? `Welcome back, ${email}!` : `Account created for ${email} 🎉`);
-    authModal.classList.remove('active');
-  };
-
-  // background music: cinematic royalty-free inspired by luxury commercial
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  let musicPlaying = false;
-  let oscillator = null;
-  let gainNode = null;
-
-  function playLuxurySoundtrack() {
-    if (musicPlaying) return;
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    // creating sophisticated pad-like cinematic vibe - subtle evolving drone with harmonic texture
-    gainNode = audioCtx.createGain();
-    gainNode.gain.value = 0.25;
-    gainNode.connect(audioCtx.destination);
-    const now = audioCtx.currentTime;
-    const osc1 = audioCtx.createOscillator();
-    osc1.type = 'sine';
-    osc1.frequency.value = 82.41; // E2 low lush
-    const osc2 = audioCtx.createOscillator();
-    osc2.type = 'triangle';
-    osc2.frequency.value = 164.81;
-    const osc3 = audioCtx.createOscillator();
-    osc3.type = 'sine';
-    osc3.frequency.value = 329.63;
-    osc1.connect(gainNode);
-    osc2.connect(gainNode);
-    osc3.connect(gainNode);
-    osc1.start();
-    osc2.start();
-    osc3.start();
-    // optional LFO vibe
-    const lfo = audioCtx.createOscillator();
-    lfo.frequency.value = 0.2;
-    const lfoGain = audioCtx.createGain();
-    lfoGain.gain.value = 30;
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc1.frequency);
-    lfo.start();
-    osc1.stop(now + 9999);
-    osc2.stop(now + 9999);
-    osc3.stop(now + 9999);
-    musicPlaying = true;
-    document.getElementById('musicStatus').innerText = "SOUND ON ✦";
-    window.luxuryOsc = [osc1, osc2, osc3, lfo];
-  }
-  function stopMusic() {
-    if(window.luxuryOsc) window.luxuryOsc.forEach(osc => { try{ osc.stop(); }catch(e){} });
-    if(gainNode) gainNode.disconnect();
-    musicPlaying = false;
-    document.getElementById('musicStatus').innerText = "LUXURY SOUNDSCAPE";
-  }
-  document.getElementById('musicToggle').onclick = () => {
-    if(musicPlaying) stopMusic();
-    else playLuxurySoundtrack();
-  };
-  // autoplay attempt after user interaction
-  document.body.addEventListener('click', () => {
-    if(!musicPlaying && audioCtx.state !== 'running') {
-      playLuxurySoundtrack();
-    }
-  }, { once: true });
-
-  // smooth reveal animations
-  const faders = document.querySelectorAll('.fade-up');
-  const appearOnScroll = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('reveal'); });
-  }, { threshold: 0.1 });
-  faders.forEach(el => appearOnScroll.observe(el));
-
-  window.scrollToFeatured = () => document.querySelector('.featured-swiper').scrollIntoView({ behavior: 'smooth' });
-</script>
-
-   
+    <script src="script.js"></script>
 </body>
 </html>
